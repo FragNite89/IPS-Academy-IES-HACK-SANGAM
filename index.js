@@ -28,7 +28,6 @@ let currentCity = "";
 let currentUnit = "c";
 let hourlyorWeek = "week";
 
-// function to get date and time
 function getDateTime() {
   let now = new Date(),
     hour = now.getHours(),
@@ -43,7 +42,8 @@ function getDateTime() {
     "Friday",
     "Saturday",
   ];
-  // 12 hours format
+
+  
   hour = hour % 12;
   if (hour < 10) {
     hour = "0" + hour;
@@ -55,13 +55,13 @@ function getDateTime() {
   return`${dayString}, ${hour}:${minute}`;
 }
 
-//Updating date and time
+
 date.innerText = getDateTime();
 setInterval(() => {
   date.innerText = getDateTime();
 }, 1000);
 
-// function to get public ip address
+
 function getPublicIp() {
   fetch("https://geolocation-db.com/json/", {
     method: "GET",
@@ -79,7 +79,6 @@ function getPublicIp() {
 
 getPublicIp();
 
-// function to get weather data
 function getWeatherData(city, unit, hourlyorWeek) {
   fetch(
     `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=EJ6UBL2JEQGYB3AA4ENASN62J&contentType=json`,
@@ -123,7 +122,8 @@ function getWeatherData(city, unit, hourlyorWeek) {
     });
 }
 
-//function to update Forecast
+
+
 function updateForecast(data, unit, type) {
   weatherCards.innerHTML = "";
   let day = 0;
@@ -165,7 +165,8 @@ function updateForecast(data, unit, type) {
   }
 }
 
-// function to change weather icons
+
+
 function getIcon(condition) {
   if (condition === "partly-cloudy-day") {
     return "https://i.ibb.co/PZQXH8V/27.png";
@@ -182,7 +183,6 @@ function getIcon(condition) {
   }
 }
 
-// function to change background depending on weather conditions
 function changeBackground(condition) {
   const body = document.querySelector("body");
   let bg = "";
@@ -201,8 +201,6 @@ function changeBackground(condition) {
   }
   body.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url(${bg})`;
 }
-
-//get hours from hh:mm:ss
 function getHour(time) {
   let hour = time.split(":")[0];
   let min = time.split(":")[1];
@@ -213,21 +211,17 @@ function getHour(time) {
     return `${hour}:${min} AM`;
   }
 }
-
-// convert time to 12 hour format
 function covertTimeTo12HourFormat(time) {
   let hour = time.split(":")[0];
   let minute = time.split(":")[1];
   let ampm = hour >= 12 ? "pm" : "am";
   hour = hour % 12;
-  hour = hour ? hour : 12; // the hour '0' should be '12'
+  hour = hour ? hour : 12;
   hour = hour < 10 ? "0" + hour : hour;
   minute = minute < 10 ? "0" + minute : minute;
   let strTime = hour + ":" + minute + " " + ampm;
   return strTime;
 }
-
-// function to get day name from date
 function getDayName(date) {
   let day = new Date(date);
   let days = [
@@ -241,8 +235,6 @@ function getDayName(date) {
   ];
   return days[day.getDay()];
 }
-
-// function to get uv index status
 function measureUvIndex(uvIndex) {
   if (uvIndex <= 2) {
     uvText.innerText = "Low";
@@ -257,7 +249,7 @@ function measureUvIndex(uvIndex) {
   }
 }
 
-// function to get humidity status
+
 function updateHumidityStatus(humidity) {
   if (humidity <= 30) {
     humidityStatus.innerText = "Low";
@@ -268,7 +260,7 @@ function updateHumidityStatus(humidity) {
   }
 }
 
-// function to get visibility status
+
 function updateVisibiltyStatus(visibility) {
   if (visibility <= 0.03) {
     visibilityStatus.innerText = "Dense Fog";
@@ -288,8 +280,6 @@ function updateVisibiltyStatus(visibility) {
     visibilityStatus.innerText = "Very Clear Air";
   }
 }
-
-// function to get air quality status
 function updateAirQualityStatus(airquality) {
   if (airquality <= 50) {
     airQualityStatus.innerText = "Good👌";
@@ -305,8 +295,6 @@ function updateAirQualityStatus(airquality) {
     airQualityStatus.innerText = "Hazardous😱";
   }
 }
-
-// function to handle search form
 searchForm.addEventListener("submit", (e) => {
   e.preventDefault();
   let location = search.value;
@@ -316,7 +304,6 @@ searchForm.addEventListener("submit", (e) => {
   }
 });
 
-// function to conver celcius to fahrenheit
 function celciusToFahrenheit(temp) {
   return ((temp * 9) / 5 + 32).toFixed(1);
 }
@@ -368,16 +355,13 @@ search.addEventListener("keydown", function (e) {
   var x = document.getElementById("suggestions");
   if (x) x = x.getElementsByTagName("li");
   if (e.keyCode == 40) {
-    /*If the arrow DOWN key
-      is pressed,
-      increase the currentFocus variable:*/
+   
     currentFocus++;
     /and and make the current item more visible:/
     addActive(x);
   } else if (e.keyCode == 38) {
-    /*If the arrow UP key
-      is pressed,
-      decrease the currentFocus variable:*/
+
+    
     currentFocus--;
     /and and make the current item more visible:/
     addActive(x);
@@ -420,7 +404,6 @@ celciusBtn.addEventListener("click", () => {
   changeUnit("c");
 });
 
-// function to change unit
 function changeUnit(unit) {
   if (currentUnit !== unit) {
     currentUnit = unit;
@@ -444,8 +427,6 @@ hourlyBtn.addEventListener("click", () => {
 weekBtn.addEventListener("click", () => {
   changeTimeSpan("week");
 });
-
-// function to change hourly to weekly or vice versa
 function changeTimeSpan(unit) {
   if (hourlyorWeek !== unit) {
     hourlyorWeek = unit;
@@ -462,8 +443,6 @@ function changeTimeSpan(unit) {
 
 
 
-// Cities add your own to get in search
-
 cities = [
   {
     country: "PK",
@@ -474,13 +453,13 @@ cities = [
 ];
 
 
-filterSelection("all") // Execute the function and show all columns
+filterSelection("all")
 function filterSelection(c) {
   var x, i;
   x = document.getElementsByClassName("column");
   if (c == "all") 
   c = "";
-  // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
+ 
   for (i = 0; i < x.length; i++) {
     w3RemoveClass(x[i], "show");
     if(x[i].className.indexOf(c) > -1)
@@ -488,7 +467,7 @@ function filterSelection(c) {
   }
 }
 
-// Show filtered elements
+
 function w3AddClass(element, name) {
   var i, arr1, arr2;
   arr1 = element.className.split(" ");
@@ -500,7 +479,7 @@ function w3AddClass(element, name) {
   }
 }
 
-// Hide elements that are not selected
+
 function w3RemoveClass(element, name) {
   var i, arr1, arr2;
   arr1 = element.className.split(" ");
@@ -513,7 +492,8 @@ function w3RemoveClass(element, name) {
   element.className = arr1.join(" ");
 }
 
-// Add active class to the current button (highlight it)
+
+
 var btnContainer = document.getElementById("myBtnContainer");
 var btns = btnContainer.getElementsByClassName("btn");
 for (var i = 0; i < btns.length; i++) {
